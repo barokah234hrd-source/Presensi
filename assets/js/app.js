@@ -69,6 +69,7 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
 
         if (!snap.empty) {
             currentUser = snap.docs[0].data();
+            localStorage.setItem("userSession", JSON.stringify(currentUser));
             document.getElementById('user-name').innerText = currentUser.nama;
             loginMsg.innerText = "";
             routeTo('main');
@@ -860,3 +861,14 @@ async function loadMyHistory() {
 if(document.getElementById('btnRefreshMyHistory')) {
     document.getElementById('btnRefreshMyHistory').addEventListener('click', loadMyHistory);
 }
+// Fungsi untuk mengecek sesi saat halaman di-refresh
+window.addEventListener('load', () => {
+    const savedUser = localStorage.getItem("userSession");
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        document.getElementById('user-name').innerText = currentUser.nama;
+        routeTo('main');
+    } else {
+        routeTo('login');
+    }
+});
