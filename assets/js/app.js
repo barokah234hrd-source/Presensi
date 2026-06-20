@@ -82,6 +82,7 @@ document.getElementById('btnLogin').addEventListener('click', async () => {
 });
 
 document.getElementById('btnLogout').addEventListener('click', () => {
+    localStorage.removeItem("userSession");
     currentUser = null;
     currentCoords = { lat: null, lng: null };
     currentDetailedAddress = "Tidak ada detail alamat";
