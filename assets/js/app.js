@@ -299,7 +299,13 @@ function renderLogHtml(dataArray) {
     }
     
     dataArray.forEach(data => {
-        const thumbUrl = data.fotoUrl ? data.fotoUrl.replace('file/d/', 'uc?export=view&id=').replace('/view?usp=drivesdk', '') : '';
+        let thumbUrl = "";
+        if (data.fotoUrl) {
+            const matchId = data.fotoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (matchId && matchId[1]) {
+                thumbUrl = `https://drive.google.com/thumbnail?id=${matchId[1]}&sz=w400`;
+            }
+        }
         const badgeClass = data.tipe === 'Masuk' ? 'badge-masuk' : 'badge-pulang';
         const mapsLink = `https://www.openstreetmap.org/?mlat=${data.lat}&mlon=${data.lng}#map=18/${data.lat}/${data.lng}`;
 
@@ -821,7 +827,13 @@ async function loadMyHistory() {
         
         let htmlRows = "";
         myData.forEach(data => {
-            const thumbUrl = data.fotoUrl ? data.fotoUrl.replace('file/d/', 'uc?export=view&id=').replace('/view?usp=drivesdk', '') : '';
+            let thumbUrl = "";
+            if (data.fotoUrl) {
+                const matchId = data.fotoUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (matchId && matchId[1]) {
+                    thumbUrl = `https://drive.google.com/thumbnail?id=${matchId[1]}&sz=w400`;
+                }
+            }
             const badgeClass = data.tipe === 'Masuk' ? 'badge-masuk' : 'badge-pulang';
             
             htmlRows += `
