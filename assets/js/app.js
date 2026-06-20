@@ -301,7 +301,7 @@ function renderLogHtml(dataArray) {
     dataArray.forEach(data => {
         const thumbUrl = data.fotoUrl ? data.fotoUrl.replace('file/d/', 'uc?export=view&id=').replace('/view?usp=drivesdk', '') : '';
         const badgeClass = data.tipe === 'Masuk' ? 'badge-masuk' : 'badge-pulang';
-        const mapsLink = `http://googleusercontent.com/maps.google.com/?q=${data.lat},${data.lng}`;
+        const mapsLink = `https://www.google.com/maps?q=${data.lat},${data.lng}`;
 
         htmlRows += `
             <div class="absen-item">
