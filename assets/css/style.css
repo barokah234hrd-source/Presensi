@@ -1,0 +1,486 @@
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text-dark: #0f172a;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+.hidden { display: none !important; }
+.p-20 { padding: 20px; }
+.center-text { text-align: center; color: var(--text-light); padding: 20px; }
+
+/* Halaman Login */
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card);
+    padding: 30px 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+}
+
+.brand-logo {
+    font-size: 40px;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+/* Input & Select Styles */
+.input-group {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.select-modern {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #fff;
+    outline: none;
+    margin-top: 6px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* Tombol Global */
+button {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover { background: var(--primary-hover); }
+button:disabled { background: #cbd5e1; cursor: not-allowed; }
+
+.error-text { color: var(--danger); font-size: 13px; text-align: center; margin-top: 12px; font-weight: 500; }
+
+/* Header Layout */
+header {
+    background: var(--card);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.header-user i { font-size: 20px; color: var(--primary); }
+
+.logout-btn {
+    width: auto;
+    background: transparent;
+    color: var(--text-light);
+    padding: 8px;
+    font-size: 18px;
+}
+.logout-btn:hover { color: var(--danger); background: transparent; }
+
+/* Fitur Kamera Absensi */
+.loc-warning { font-size: 13px; color: var(--warning); margin: 8px 0 6px; font-weight: 500; }
+.loc-success { font-size: 13px; color: var(--success); margin: 8px 0 6px; font-weight: 500; }
+.addr-info { font-size: 12px; color: var(--text-light); margin-bottom: 15px; line-height: 1.4; font-style: italic; }
+
+.camera-box {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    aspect-ratio: 4 / 3;
+}
+video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.status-info { text-align: center; margin-top: 15px; font-size: 14px; font-weight: 500; }
+
+/* Tampilan HRD / Admin (Mobile First) */
+.admin-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #e2e8f0;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.tab-btn {
+    background: transparent;
+    color: var(--text-light);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.tab-btn.active {
+    background: var(--card);
+    color: var(--primary);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.admin-stat { margin-bottom: 20px; }
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.stat-card h3 { font-size: 28px; color: var(--primary); font-weight: 700; }
+.stat-card p { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+
+.section-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 12px;
+}
+
+.btn-small { width: auto; padding: 8px 14px; font-size: 13px; border-radius: 8px; }
+.btn-secondary { background: #64748b; }
+.btn-secondary:hover { background: #475569; }
+.btn-success { background: var(--success); }
+.btn-success:hover { background: #059669; }
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #dc2626; }
+
+/* Badges Masuk / Pulang */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+}
+.badge-masuk { background-color: #d1fae5; color: #065f46; }
+.badge-pulang { background-color: #fee2e2; color: #991b1b; }
+
+/* List Data Absensi (HRD Card View) */
+.absen-item {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.absen-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.absen-info { flex: 1; }
+.absen-title-wrapper { display: flex; align-items: center; margin-bottom: 4px; }
+.absen-info h4 { font-size: 15px; font-weight: 600; color: var(--text-dark); }
+.absen-info p { font-size: 12px; color: var(--text-light); display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+.absen-detail-alamat { font-size: 12px; color: var(--text-dark); font-weight: 400; line-height: 1.4; margin: 6px 0; background-color: #f8fafc; padding: 6px 10px; border-radius: 6px; border-left: 3px solid var(--primary); }
+.tag-location {
+    display: inline-block;
+    font-size: 11px;
+    background: #f1f5f9;
+    color: var(--primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Card Kelola Karyawan */
+.employee-card {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emp-info h4 { font-size: 15px; font-weight: 600; }
+.emp-info p { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.emp-actions { display: flex; gap: 6px; }
+.emp-actions button { width: auto; padding: 8px 12px; font-size: 13px; border-radius: 6px; }
+
+/* Forms Kelola Karyawan */
+.form-group { margin-bottom: 14px; text-align: left; }
+.form-group label { font-size: 13px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 6px; }
+.form-group input, .form-group select {
+    width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; outline: none;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+.form-actions { display: flex; gap: 10px; margin-top: 20px; }
+.shadow-form { border: 1px solid var(--primary); box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1); }
+
+/* Animasi Spinner Loader */
+.loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* Update Desain Fitur HRD Baru */
+.badge-terlambat {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 4px;
+    display: inline-block;
+}
+.map-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+.map-link:hover {
+    text-decoration: underline;
+    color: var(--primary-hover);
+}
+.btn-delete-log {
+    background: transparent;
+    color: var(--danger);
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+}
+.btn-delete-log:hover { color: #b91c1c; }
+/* ========================================================
+   RESPONSIVE DESIGN (TABLET & DESKTOP / LAPTOP)
+   ======================================================== */
+
+/* UNTUK LAYAR TABLET / LAPTOP KECIL (Lebar minimal 768px) */
+@media (min-width: 768px) {
+    /* Batasi lebar maksimal aplikasi agar tidak melar seukuran monitor */
+    #view-main {
+        max-width: 850px;
+        margin: 0 auto;
+        background: var(--card);
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        min-height: 100vh;
+    }
+
+    /* Navigasi Tab HRD dibuat ke tengah */
+    .admin-nav {
+        justify-content: center;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+    }
+    
+    .tab-btn {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+
+    /* Mengubah List Absen, Rekap, dan Karyawan menjadi Grid 2 Kolom */
+    .absen-list, #employee-list-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    /* Hapus margin-bottom bawaan HP karena sudah diganti gap dari Grid */
+    .absen-item, .employee-card, .rekap-card {
+        margin-bottom: 0;
+        height: 100%; /* Memastikan tinggi kartu seragam */
+    }
+
+    /* Area Form Tambah Karyawan tidak perlu terlalu lebar */
+    #employee-form-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Area Kamera Karyawan agar tidak menjadi raksasa di Laptop */
+    .camera-box {
+        max-width: 500px;
+        margin: 0 auto 20px auto;
+        border-radius: 16px;
+    }
+}
+
+/* UNTUK LAYAR DESKTOP / MONITOR BESAR (Lebar minimal 1024px) */
+@media (min-width: 1024px) {
+    #view-main {
+        max-width: 1100px;
+        margin: 20px auto; /* Memberikan efek aplikasi "mengambang" di tengah monitor */
+        border-radius: 20px;
+        overflow: hidden;
+        min-height: calc(100vh - 40px);
+        border: 1px solid var(--border);
+    }
+
+    /* Mengubah List Absen, Rekap, dan Karyawan menjadi Grid 3 Kolom */
+    .absen-list, #employee-list-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Membesarkan sedikit font statistik HRD */
+    .stat-card h3 {
+        font-size: 36px;
+    }
+}
+/* ========================================================
+   DESAIN TABEL MATRIKS REKAP ABSENSI
+   ======================================================== */
+.rekap-legend { display: flex; gap: 15px; margin-bottom: 15px; font-size: 12px; font-weight: 600;}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-box { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
+
+.table-responsive { 
+    width: 100%; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.rekap-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 12px; 
+    text-align: center; 
+}
+
+.rekap-table th, .rekap-table td { 
+    border: 1px solid var(--border); 
+    padding: 8px 4px; 
+    min-width: 30px;
+}
+
+.rekap-table th { 
+    background: #f8fafc; 
+    font-weight: 700; 
+    color: var(--text-dark); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1;
+}
+
+/* Membuat Kolom Nama menempel seperti Freeze Pane di Excel */
+.rekap-table td.nama-karyawan { 
+    text-align: left; 
+    font-weight: 600; 
+    white-space: nowrap; 
+    padding: 8px 12px;
+    position: sticky; 
+    left: 0; 
+    background: #ffffff; 
+    z-index: 2;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+.rekap-table th:first-child { 
+    position: sticky; 
+    left: 0; 
+    z-index: 3; 
+    background: #f8fafc;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+/* Warna Kotak Indikator */
+.cell-hadir { background-color: #22c55e; cursor: pointer; transition: 0.2s;}
+.cell-hadir:hover { background-color: #16a34a; }
+
+.cell-libur { background-color: #ef4444; cursor: pointer; transition: 0.2s;}
+.cell-libur:hover { background-color: #dc2626; }

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Presensi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+</head>
+
+    
+</head>
+<body>
+
+    <div id="view-login" class="login-container">
+        <div class="card">
+            <div class="brand-logo">
+                <i class="fa-solid fa-camera-retro"></i>
+            </div>
+            <h2>Presensi Barokah 234</h2>
+            <p class="subtitle">Pejuang Omset</p>
+            
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="username" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            
+            <button id="btnLogin">Masuk Aplikasi</button>
+            <p id="login-msg" class="error-text"></p>
+        </div>
+    </div>
+
+    <div id="view-main" class="hidden">
+        <header>
+            <div class="header-user">
+                <i class="fa-solid fa-circle-user"></i>
+                <span id="header-title">E-Presensi WFA</span>
+            </div>
+            <button id="btnLogout" class="logout-btn" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </header>
+
+        <div id="view-employee" class="p-20 hidden">
+            <div class="admin-nav" style="margin-bottom: 15px;">
+                <button id="tab-emp-absen" class="tab-btn active"><i class="fa-solid fa-camera"></i> Kamera Absen</button>
+                <button id="tab-emp-riwayat" class="tab-btn"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Saya</button>
+            </div>
+
+            <div id="emp-absen-section">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 15px;">
+                        <h3 style="margin: 0;">Halo, <span id="user-name">...</span></h3>
+                        <div id="live-clock" style="font-weight:700; color:var(--primary); font-size:16px; background:#f1f5f9; padding:6px 12px; border-radius:8px; border:1px solid #e2e8f0;">00:00:00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-business-time"></i> Pilih Jenis Presensi:</label>
+                        <select id="absen-tipe" class="select-modern">
+                            <option value="Masuk">Absen Masuk Kerja</option>
+                            <option value="Pulang">Absen Pulang Kerja</option>
+                        </select>
+                    </div>
+
+                    <p id="loc-status" class="loc-warning"><i class="fa-solid fa-location-crosshairs"></i> Meminta akses lokasi (GPS)...</p>
+                    <p id="addr-status" class="addr-info hidden"><i class="fa-solid fa-map-location-dot"></i> Mencari alamat detail...</p>
+                    
+                    <div class="camera-box">
+                        <video id="video" autoplay playsinline></video>
+                    </div>
+                    
+                    <button id="btnAbsen" disabled><i class="fa-solid fa-fingerprint"></i> Ambil Foto & Absen</button>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <p id="absen-msg" class="status-info"></p>
+                </div>
+            </div>
+
+            <div id="emp-riwayat-section" class="hidden">
+                <div class="section-title-container">
+                    <h3 style="margin: 0;">Riwayat Kehadiran Saya</h3>
+                    <button id="btnRefreshMyHistory" class="btn-small btn-secondary" title="Muat Ulang"><i class="fa-solid fa-rotate"></i></button>
+                </div>
+                <div id="my-history-container" class="absen-list">
+                    <p class="center-text">Memuat riwayat...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-admin" class="p-20 hidden">
+            <div class="admin-nav">
+                <button id="tab-log" class="tab-btn active"><i class="fa-solid fa-list-check"></i> Log Absensi</button>
+                <button id="tab-rekap" class="tab-btn"><i class="fa-solid fa-chart-pie"></i> Rekap</button>
+                <button id="tab-karyawan" class="tab-btn"><i class="fa-solid fa-users-gear"></i> Kelola Karyawan</button>
+            </div>
+
+            <div id="admin-log-section">
+                <div class="admin-stat">
+                    <div class="stat-card">
+                        <h3 id="count-total">0</h3>
+                        <p>Total Records Tersimpan</p>
+                    </div>
+                </div>
+                
+                <div class="section-title-container" style="flex-wrap: wrap; gap: 10px;">
+                    <h3 style="margin: 0;">Log Absensi</h3>
+                    <div style="display:flex; gap:8px;">
+                        <button id="btnExportCSV" class="btn-small btn-success" title="Download CSV Log"><i class="fa-solid fa-file-csv"></i> Unduh</button>
+                        <button id="btnRefresh" class="btn-small btn-secondary" title="Muat Ulang"><i class="fa-solid fa-rotate"></i></button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 2; margin: 0; min-width: 200px;">
+                        <div class="input-group" style="margin: 0;">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-log" placeholder="Cari nama karyawan...">
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 1; margin: 0; min-width: 140px;">
+                        <input type="date" id="filter-log-date" class="select-modern" style="margin: 0; padding: 13px 12px; height: 100%; border: 1px solid var(--border); border-radius: 10px; outline: none; cursor: pointer;" title="Filter berdasarkan Tanggal">
+                    </div>
+                </div>
+
+                <div id="log-container" class="absen-list">
+                    <p class="center-text">Memuat database dari Firestore...</p>
+                </div>
+            </div>
+
+            <div id="admin-rekap-section" class="hidden">
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3 style="margin-top:0;">Filter Rangkuman Matriks</h3>
+                    <div style="display:flex; gap:10px; margin-bottom: 10px;">
+                        <div style="flex:1;">
+                            <label style="font-size:12px;">Dari Tanggal</label>
+                            <input type="date" id="filter-start" class="select-modern" style="padding:8px;">
+                        </div>
+                        <div style="flex:1;">
+                            <label style="font-size:12px;">Sampai Tanggal</label>
+                            <input type="date" id="filter-end" class="select-modern" style="padding:8px;">
+                        </div>
+                    </div>
+                    
+                    <div style="display:flex; gap:10px;">
+                        <button id="btnGenerateRekap" class="btn-secondary" style="padding:10px; flex:1;"><i class="fa-solid fa-magnifying-glass"></i> Tampilkan Rangkuman</button>
+                        <button id="btnExportRekapExcel" class="btn-success hidden" style="padding:10px; flex:1;"><i class="fa-solid fa-file-excel"></i> Export ke Excel</button>
+                    </div>
+                        
+                </div>
+                <div id="rekap-container" ><p class="center-text">Pilih rentang tanggal maksimal 31 hari, lalu klik tampilkan.</p></div>
+            </div>
+
+            <div id="admin-karyawan-section" class="hidden">
+                <div class="section-title-container">
+                    <h3 style="margin: 0;">Daftar Karyawan</h3>
+                    <div style="display:flex; gap:8px;">
+                        <label for="importCsvFile" class="btn-small btn-secondary" style="cursor:pointer; padding:8px 14px; border-radius:8px; background:#64748b; color:white; font-size:13px; display:inline-block;"><i class="fa-solid fa-upload"></i> Import CSV</label>
+                        <input type="file" id="importCsvFile" accept=".csv" class="hidden">
+                        <button id="btnTambahKaryawan" class="btn-small btn-success"><i class="fa-solid fa-user-plus"></i> Tambah</button>
+                    </div>
+                </div>
+                
+                <div id="employee-list-container">
+                    <p class="center-text">Memuat data karyawan...</p>
+                </div>
+
+                <div id="employee-form-container" class="card hidden shadow-form">
+                    <h3 id="form-title">Tambah Karyawan Baru</h3>
+                    <input type="hidden" id="emp-doc-id">
+                    
+                    <div class="form-group">
+                        <label>ID Karyawan</label>
+                        <input type="text" id="emp-id" placeholder="Misal: EMP-001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" id="emp-nama" placeholder="Misal: Yogi / Alwi / Hanif">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Bagian / Departemen</label>
+                        <input type="text" id="emp-bagian" placeholder="Misal: Produksi / Dapur / Kasir">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <input type="date" id="emp-tgl-masuk" class="select-modern" style="padding: 12px; width: 100%; border: 1px solid var(--border); border-radius: 8px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username (Untuk Login)</label>
+                        <input type="text" id="emp-username" placeholder="Username huruf kecil tanpa spasi">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Password (Untuk Login)</label>
+                        <input type="text" id="emp-password" placeholder="Password akun">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Hak Akses Sistem (Role)</label>
+                        <select id="emp-role">
+                            <option value="karyawan">Karyawan Lapangan</option>
+                            <option value="admin">HRD / Administrator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="btnSimpanKaryawan" class="btn-success">Simpan Data</button>
+                        <button id="btnBatalKaryawan" class="btn-danger">Batal</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/app.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker sukses didaftarkan dengan scope: ', registration.scope);
+                })
+                .catch(err => {
+                    console.log('Pendaftaran ServiceWorker gagal: ', err);
+                });
+        });
+    }
+</script>
+</body>
+</html>
